@@ -9,7 +9,7 @@ In this article I will present some selected results. (If you want you can also 
 
 ## Mutual mentions
 
-The following chord graph ([click here for an interactive version](http://daiw.de/github/programming-language-subreddits-and-their-choice-of-words/mentions_chord_graph/index.html)) shows how often a programming language is mentioned in communities (subreddits) not belonging to them:
+The following chord graph (click it for an [interactive version](http://daiw.de/github/programming-language-subreddits-and-their-choice-of-words/mentions_chord_graph/index.html)) shows how often a programming language is mentioned in communities (subreddits) not belonging to them:
 
 [![(mutual mentions)](img/mutual_mentions.png)][interactive-mutual-mentions]
 
@@ -19,7 +19,7 @@ The following chord graph ([click here for an interactive version](http://daiw.d
 
 The "big" languages are the ones most talked about, *yawn*.
 
-Sure, [measuring programming language popularity](http://en.wikipedia.org/wiki/Measuring_programming_language_popularity) accurately is nearly impossible, but if we still simply take some values from [tiobe](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html) it gets interesting, because one can see how much is talked about a language relatively to how much it is supposedly used.
+Sure, [measuring programming language popularity](http://en.wikipedia.org/wiki/Measuring_programming_language_popularity) accurately is nearly impossible, but if we still simply take some values from [TIOBE](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html) it gets interesting, because one can see how much is talked about a language relatively to how much it is supposedly used.
 
 ![mentions relative to tiobe](img/mentions_relative_to_tiobe.png "mentions relative to tiobe")
 
@@ -32,7 +32,7 @@ Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/H
 
 ## Word usage
 
-Now I also divided the number of comments in a subreddit containing a chosen word by the overall subreddit comment count. Some results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising, but what is up with the third one?
+If we now divide the number of comments in a subreddit containing a chosen word by the overall subreddit comment count (and multiply by 10000 to have a nice integer value), we get more ... well, diagrams. Some results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising, but what is up with the third one? :D
 
 
 ![abstract concepts](img/abstract_concepts.png "abstract concepts")
@@ -51,16 +51,16 @@ Here a [conjecture many of us probably have](http://eev.ee/blog/2012/04/09/php-a
 
 ## Happyness
 
-I want to finish with something positive. The lispy guys seem to be the most positive people.
+I want to finish with something positive. The lispy guys seem to be the most cheerful people.
 
 ![happy](img/happy.png "happy")
 
-But what is up with the Visual Basic community? They are neither angry nor happy. They just are.
+But what is up with the Visual Basic community? They are neither angry nor happy. They just ... are? :)
 
 
 
 ## Disclaimer
 
-As you probably already noticed, this was not hard science. It was just a small fun project and contains several possiblities for errors. I tried to only choose communities and words so that there is at least a bit of statistical significance, but also errors in my parser and interpretation (e.g. no taking negations into accout etc.) are quite likely.
+As you probably already noticed, this is not hard science. It was just a small fun project and contains several possiblities for errors. I tried to only choose big communities and frequent words so that there is at least a bit of statistical significance, but potential errors in my parser and interpretation (e.g. no taking negations into accout etc.) are also not to exclude. ;)
 
-If somebody wants to repeat this exepriment to confirm or refute the results with more fancy tools like [nltk](http://www.nltk.org/) or something, I would be happy if you could [drop me an email](mailto:harry@daiw.de).
+If somebody wants to repeat this exepriment to confirm/refute the results with more fancy tools like [nltk](http://www.nltk.org/) or something, I would be happy if you could [drop me an email](mailto:harry@daiw.de).

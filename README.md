@@ -32,7 +32,7 @@ Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/H
 
 ## Word usage
 
-Now I also divided the number of comments in a subreddit containing a word by the overall subreddit comment count. Some results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising, but what is up with the third one?
+Now I also divided the number of comments in a subreddit containing a chosen word by the overall subreddit comment count. Some results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising, but what is up with the third one?
 
 
 ![abstract concepts](img/abstract_concepts.png "abstract concepts")

@@ -51,7 +51,7 @@ Here a [conjecture many of us probably have](http://eev.ee/blog/2012/04/09/php-a
 
 ## Happyness
 
-I want to finish with something positive. The lispy guys seem to be the most cheerful people.
+To finish with something positive: The lispy guys seem to be the most cheerful people.
 
 ![happy](img/happy.png "happy")
 

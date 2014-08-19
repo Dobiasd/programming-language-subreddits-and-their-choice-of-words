@@ -11,7 +11,7 @@ Here I will present the results. (If you want you can also download the [code I 
 
 The following ([click here for interactive version](mentions_chord_graph)) chord graph shows how often a programming language is mentioned in communities (subreddits) not their own:
 
-![mutual mentions](img/programming_language_subreddits_and_their_choice_of_words/abstract_concepts.png "mutual mentions")
+![mutual mentions](img/programming_language_subreddits_and_their_choice_of_words/mutual_mentions.png "mutual mentions")
 
 The size of a language is set by how othen the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.
 

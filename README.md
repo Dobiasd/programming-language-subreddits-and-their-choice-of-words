@@ -9,11 +9,11 @@ In this article I will present some selected results. (If you want you can also 
 
 ## Mutual mentions
 
-The following chord graph ([click here for an interactive version](http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/index.html)) shows how often a programming language is mentioned in communities (subreddits) not belonging to them:
+The following chord graph ([click here for an interactive version](http://daiw.de/github/programming-language-subreddits-and-their-choice-of-words/mentions_chord_graph/index.html)) shows how often a programming language is mentioned in communities (subreddits) not belonging to them:
 
 [![(mutual mentions)](img/mutual_mentions.png)][interactive-mutual-mentions]
 
-[interactive-mutual-mentions]: http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/index.html
+[interactive-mutual-mentions]: http://daiw.de/github/programming-language-subreddits-and-their-choice-of-words/mentions_chord_graph/index.html
 
 (The size of a language is set by how othen the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.)
 

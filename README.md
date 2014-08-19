@@ -9,19 +9,25 @@ In this article I will present some selected results. (If you want you can also 
 
 ## Mutual mentions
 
-The following ([click here for interactive version](http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/index.html)) chord graph shows how often a programming language is mentioned in communities (subreddits) not their own:
+The following chord graph ([click here for an interactive version](http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/index.html)) shows how often a programming language is mentioned in communities (subreddits) not belonging to them:
 
 [![(mutual mentions)](img/mutual_mentions.png)][interactive-mutual-mentions]
 
 [interactive-mutual-mentions]: http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/index.html
 
-The size of a language is set by how othen the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.
+(The size of a language is set by how othen the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.)
 
-Sure, [measuring programming language popularity](http://en.wikipedia.org/wiki/Measuring_programming_language_popularity) accurately is nearly impossible, but if we still simply take some values from [tiobe](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html) one can see how much is talked about a language relatively to how much it is supposedly used.
+The "big" languages are the ones most talked about, *yawn*.
+
+Sure, [measuring programming language popularity](http://en.wikipedia.org/wiki/Measuring_programming_language_popularity) accurately is nearly impossible, but if we still simply take some values from [tiobe](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html) it gets interesting, because one can see how much is talked about a language relatively to how much it is supposedly used.
 
 ![mentions relative to tiobe](img/mentions_relative_to_tiobe.png "mentions relative to tiobe")
 
-Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/Hindsight_bias) (regarding Haskell).
+Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/Hindsight_bias).
+
+![haskell tweet](img/haskell_tweet.png "haskell tweet")
+
+
 
 
 ## Word usage

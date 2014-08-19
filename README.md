@@ -11,13 +11,13 @@ Here I will present the results. (If you want you can also download the [code I 
 
 The following ([click here for interactive version](mentions_chord_graph)) chord graph shows how often a programming language is mentioned in communities (subreddits) not their own:
 
-![mutual mentions](img/programming_language_subreddits_and_their_choice_of_words/mutual_mentions.png "mutual mentions")
+![mutual mentions](img/mutual_mentions.png "mutual mentions")
 
 The size of a language is set by how othen the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.
 
 Sure, [measuring programming language popularity](http://en.wikipedia.org/wiki/Measuring_programming_language_popularity) accurately is nearly impossible, but if we still simply take some values from [tiobe](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html) one can see how much is talked about a language relatively to how much it is supposedly used.
 
-![mentions relative to tiobe](img/programming_language_subreddits_and_their_choice_of_words/mentions_relative_to_tiobe.png "mentions relative to tiobe")
+![mentions relative to tiobe](img/mentions_relative_to_tiobe.png "mentions relative to tiobe")
 
 Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/Hindsight_bias) (regarding Haskell).
 
@@ -27,25 +27,25 @@ Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/H
 Now I also divided the number of comments in a subreddit containing a word by the overall subreddit comment count. Some results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising, but what is up with the third one?
 
 
-![abstract concepts](img/programming_language_subreddits_and_their_choice_of_words/abstract_concepts.png "abstract concepts")
+![abstract concepts](img/abstract_concepts.png "abstract concepts")
 
-![hardware](img/programming_language_subreddits_and_their_choice_of_words/hardware.png "hardware")
+![hardware](img/hardware.png "hardware")
 
-![nerd](img/programming_language_subreddits_and_their_choice_of_words/nerd.png "nerd")
+![nerd](img/nerd.png "nerd")
 
 
 ## Cursing
 
 Here a [conjecture many of us probably have](http://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/) will be confirmed.
 
-![cursing](img/programming_language_subreddits_and_their_choice_of_words/cursing.png "cursing")
+![cursing](img/cursing.png "cursing")
 
 
 ## Happyness
 
 I want to finish with something positive. The lispy guys seem to be the most positive people.
 
-![happy](img/programming_language_subreddits_and_their_choice_of_words/happy.png "happy")
+![happy](img/happy.png "happy")
 
 But what is up with the Visual Basic community? They are neither angry nor happy. They just are.
 

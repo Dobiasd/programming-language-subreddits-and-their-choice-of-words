@@ -638,7 +638,6 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
         for column in columns:
             dataset_row[column] = int(row[column])
         dataset.append(dataset_row)
-    print dataset
 
     data_orders = [columns] * len(subreddits)
 
@@ -686,7 +685,7 @@ def draw_graphs():
 
     draw_word_mentions('words',
         ['hardware'],
-        ['#5CCCCC'],
+        ['#5577CC'],
         True,
         'hardware')
 

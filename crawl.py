@@ -696,6 +696,8 @@ def draw_graphs():
         True,
         'nerd')
 
+    #todo: mentioned div tiobe: http://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
+
 def main():
     #get_comments()
     #get_submission_ids()

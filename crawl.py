@@ -9,14 +9,17 @@ __version__ = '1.0.0'
 
 from collections import Counter
 import datetime
+import csv
 import cPickle
 import functools
+import pprint
 import operator
 import os
 import re
 import sqlite3
 import subprocess
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 languages = [
     ('actionscript', ['actionscript']),
@@ -481,10 +484,13 @@ def cache_subreddit_comment_counts():
     conn.close()
 
 def print_table(table):
+    result = ""
     for row in table:
         for cell in row:
-            print cell,
-        print
+            result += cell + ","
+        result = result[:-1]
+        result += "\n"
+    return result
 
 def relative_word_count(c, subreddit, word):
     command =\
@@ -546,7 +552,7 @@ def who_by_whom(c):
             AND cached_subreddit_comment_counts.cnt > 100\
         ORDER BY result DESC'
     c.execute(command)
-    print_table(c.fetchall())
+    write_str_to_file("analysis/who_by_whom.csv", print_table(c.fetchall()))
 
 def who_himself(c):
     print 'who mentions himself the most often relative to own comment count'
@@ -558,7 +564,7 @@ def who_himself(c):
             AND cached_mutual_mentions.mentioner == cached_mutual_mentions.mentionee\
         ORDER BY result DESC, mentionee'
     c.execute(command)
-    print_table(c.fetchall())
+    write_str_to_file("analysis/who_himself.csv", print_table(c.fetchall()))
 
 def who_by_others(c):
     print 'who is mentioned how often by others relative to all others comment count'
@@ -571,7 +577,7 @@ def who_by_others(c):
         GROUP BY mentionee\
         ORDER BY result DESC'
     c.execute(command)
-    print_table(c.fetchall())
+    write_str_to_file("analysis/who_by_others.csv", print_table(c.fetchall()))
 
 def count_word_mentions(c):
     big_subreddits = filter(functools.partial(isSubredditBig, c), subreddits)
@@ -600,13 +606,104 @@ def analyse_comments():
 
     conn.close()
 
+def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
+    reader = csv.DictReader(open('analysis/' + name + '.csv'))
+
+    output = []
+    for row in reader:
+        #print row
+        d = {}
+        for col in columns + ['subreddit']:
+            d[col] = row[col]
+        output.append(d)
+
+    def dict_sum(d):
+        c = d.copy();
+        c.pop('subreddit')
+        return sum(map(int,c.values()))
+
+
+    if sorted_by_sum:
+        output.sort(key=lambda x: dict_sum(x), reverse = True)
+    else:
+        output.sort(key=lambda x: x['subreddit'], reverse = True)
+
+    subreddits = []
+    dataset = []
+    for row in output:
+        subreddit = row['subreddit']
+        subreddits.append(subreddit)
+        dataset_row = {}
+        counts = []
+        for column in columns:
+            dataset_row[column] = int(row[column])
+        dataset.append(dataset_row)
+    print dataset
+
+    data_orders = [columns] * len(subreddits)
+
+    names = sorted(dataset[0].keys())
+
+    values = np.array([[data[name] for name in order] for data,order in zip(dataset, data_orders)])
+    lefts = np.insert(np.cumsum(values, axis=1),0,0, axis=1)[:, :-1]
+    orders = np.array(data_orders)
+    bottoms = np.arange(len(data_orders))
+
+    for name, color in zip(names, colors):
+        idx = np.where(orders == name)
+        value = values[idx]
+        left = lefts[idx]
+        plt.bar(left=left, height=0.8, width=value, bottom=bottoms,
+                color=color, orientation="horizontal", label=name)
+    plt.yticks(bottoms+0.4, subreddits)
+    plt.legend(loc="best", bbox_to_anchor=(1.0, 1.00))
+
+    #plt.subplots_adjust(right=0.95)
+    #plt.subplots_adjust(left=1.85)
+    plt.savefig('img/' + filename + '.png', bbox_inches='tight')
+    #plt.show()
+    plt.close()
+
+def draw_graphs():
+    # colors from http://colorschemedesigner.com/csd-3.5/
+    draw_word_mentions('cursing',
+        ['crap', 'fuck', 'hate', 'shit'],
+        ['#66A3D2', '#7373D9', '#61D7A4', '#FFC373'],
+        True,
+        'cursing')
+
+    draw_word_mentions('happy',
+        ['awesome', 'cool', 'fun', 'happy', 'helpful', 'interesting'],
+        ['#FF9640', '#FFBF40', '#FF4040', '#33CCCC', '#FFB273', '#FF7373'],
+        True,
+        'happy')
+
+    draw_word_mentions('words',
+        ['abstract', 'category', 'pure', 'theory'],
+        ['#FF7373', '#FFB273', '#5CCCCC', '#67E667'],
+        True,
+        'abstract_concepts')
+
+    draw_word_mentions('words',
+        ['hardware'],
+        ['#5CCCCC'],
+        True,
+        'hardware')
+
+    draw_word_mentions('words',
+        ['nerd'],
+        ['#67E667'],
+        True,
+        'nerd')
+
 def main():
     #get_comments()
     #get_submission_ids()
     #pickle_comments()
     #comments_to_db()
     #cache_db_results()
-    analyse_comments()
+    #analyse_comments()
+    draw_graphs()
 
 if __name__ == '__main__':
     main()

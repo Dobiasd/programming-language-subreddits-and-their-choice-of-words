@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title>programming language subreddits - mutual mentions 2013/2014</title>
 <style>
-    @import url(http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/style.css);
+    @import url(style.css);
     #circle circle {
         fill: none;
         pointer-events: all;
@@ -20,7 +20,7 @@
 </style>
 <p>Built with <a href="http://d3js.org/">d3.js</a>. - Code from <a href="http://bl.ocks.org/AndrewRP/7468330">AndrewRP</a>
 </aside>
-<script src="http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/d3.v2.min.js"></script>
+<script src="d3.v2.min.js"></script>
 <script>
     var width = 720,
     height = 720,
@@ -51,8 +51,8 @@
     svg.append("circle")
     .attr("r", outerRadius);
 
-    d3.csv("http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/subreddits.csv", function(cities) {
-        d3.json("http://rawgit.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/mentions_chord_graph/matrix.json", function(matrix) {
+    d3.csv("subreddits.csv", function(cities) {
+        d3.json("matrix.json", function(matrix) {
 
             // Compute the chord layout.
             layout.matrix(matrix);

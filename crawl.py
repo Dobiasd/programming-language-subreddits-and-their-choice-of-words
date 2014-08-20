@@ -711,6 +711,7 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename, div_col=N
         plt.bar(left=left, height=0.8, width=value, bottom=bottoms,
                 color=color, orientation="horizontal", label=name)
     plt.yticks(bottoms+0.4, subreddits)
+    plt.xlabel('contains word / comments')
     plt.legend(loc="best", bbox_to_anchor=(1.0, 1.00))
     plt.savefig('img/' + filename + '.png', bbox_inches='tight')
     plt.close()
@@ -794,14 +795,14 @@ def draw_irc():
         'sum')
 
 def main():
-    get_submission_ids()
-    get_comments()
-    pickle_comments()
-    comments_to_db()
-    cache_db_results()
-    analyse_comments()
+    #get_submission_ids()
+    #get_comments()
+    #pickle_comments()
+    #comments_to_db()
+    #cache_db_results()
+    #analyse_comments()
     draw_graphs()
-    grep__irc()
+    #grep__irc()
     draw_irc()
 
 if __name__ == '__main__':

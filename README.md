@@ -32,14 +32,12 @@ Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/H
 
 ## Word usage
 
-If we now divide the number of comments in a subreddit containing a chosen word by the overall subreddit comment count (and multiply by 10000 to have a nice integer value), we get more ... well, diagrams. Some results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising, but what is up with the third one? :D
+If we now divide the number of comments in a subreddit containing a chosen word by the overall subreddit comment count (and multiply by 10000 to have a nice integer value), we get more ... well, diagrams. But most results like the obsession with abstract concepts by the Haskell people and the consideration of hardware issues by people using C and C++ are not that surprising.
 
 
 ![abstract concepts](img/abstract_concepts.png "abstract concepts")
 
 ![hardware](img/hardware.png "hardware")
-
-![nerd](img/nerd.png "nerd")
 
 
 ## Cursing

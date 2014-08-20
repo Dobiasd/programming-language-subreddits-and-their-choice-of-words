@@ -635,6 +635,11 @@ def count_word_mentions(c):
     write_str_to_file('analysis/slang.csv', show_word_table(c, big_subreddits, internet_slang_words))
     write_str_to_file('analysis/words.csv', show_word_table(c, big_subreddits, single_words + opposite_words))
 
+    write_str_to_file('analysis/happy_all.csv', show_word_table(c, subreddits, positive_emotions))
+    write_str_to_file('analysis/cursing_all.csv', show_word_table(c, subreddits, negative_emotions))
+    write_str_to_file('analysis/slang_all.csv', show_word_table(c, subreddits, internet_slang_words))
+    write_str_to_file('analysis/words_all.csv', show_word_table(c, subreddits, single_words + opposite_words))
+
 def isSubredditBig(c, subreddit):
     return get_subreddit_comment_count(c, subreddit) >= minSubredditCommentsToCountAsBig
 
@@ -695,6 +700,9 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename, div_col=N
         dataset.append(dataset_row)
 
     data_orders = [columns] * len(subreddits)
+
+    if not dataset:
+        return
 
     names = sorted(dataset[0].keys())
 

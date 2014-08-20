@@ -15,7 +15,7 @@ The following chord graph (click it for an [interactive version](http://daiw.de/
 
 [interactive-mutual-mentions]: http://daiw.de/github/programming-language-subreddits-and-their-choice-of-words/mentions_chord_graph/index.html
 
-(The size of a language is set by how othen the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.)
+(The size of a language is set by how often the others talk about it in sum. One connection represents the mutual mentions of two communities. The widths on each end is determined by the relative frequency of the mentionee being referenced by the respective other community.)
 
 The "big" languages are the ones most talked about, *yawn*.
 

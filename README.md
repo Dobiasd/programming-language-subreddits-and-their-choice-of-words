@@ -1,6 +1,6 @@
 # Programming language subreddits and their choice of words
 
-While reading about various programming languages, I developed a hunch about how often different languages are mentioned by other communities and about the  conversational tones used by the people there.
+While reading about various programming languages, I developed a hunch about how often different languages are mentioned by other communities and about average the  conversational tones used by the people there.
 
 To examine if it was just selective perception on my site, [an unconscious confirmation of stereotypes](http://en.wikipedia.org/wiki/Confirmation_bias), or a valid observation I collected and analysed some data, i.e. all comments (about 300k) written to submissions (about 40k) in respective programming language subreddits from 2013-08 to 2014-07 using [PRAW](https://praw.readthedocs.org).
 
@@ -42,7 +42,7 @@ If we now divide the number of comments in a subreddit containing a chosen word 
 
 ## Cursing
 
-Here a [conjecture many of us probably have](http://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/) will be confirmed.
+This part here is quite comforting, because a [conjecture many of us probably have](http://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/) is confirmed.
 
 ![cursing](img/cursing.png "cursing")
 

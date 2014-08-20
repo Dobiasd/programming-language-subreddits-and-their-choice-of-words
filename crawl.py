@@ -290,9 +290,6 @@ emoticons = [
     ]
 
 
-
-
-
 # http://www.reddit.com/r/redditdev/comments/2c1iv5/how_to_get_all_comments_ever_written_in_a/
 
 
@@ -638,7 +635,7 @@ def analyse_comments():
     who_himself(c)
     who_by_others(c)
     show_mutual_mentions(c)
-    #count_word_mentions(c)
+    count_word_mentions(c)
 
     conn.close()
 
@@ -647,7 +644,6 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
 
     output = []
     for row in reader:
-        #print row
         d = {}
         for col in columns + ['subreddit']:
             d[col] = row[col]
@@ -657,7 +653,6 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
         c = d.copy();
         c.pop('subreddit')
         return sum(map(int,c.values()))
-
 
     if sorted_by_sum:
         output.sort(key=lambda x: dict_sum(x), reverse = True)
@@ -692,11 +687,7 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
                 color=color, orientation="horizontal", label=name)
     plt.yticks(bottoms+0.4, subreddits)
     plt.legend(loc="best", bbox_to_anchor=(1.0, 1.00))
-
-    #plt.subplots_adjust(right=0.95)
-    #plt.subplots_adjust(left=1.85)
     plt.savefig('img/' + filename + '.png', bbox_inches='tight')
-    #plt.show()
     plt.close()
 
 def draw_who_by_others():
@@ -725,7 +716,6 @@ def draw_who_by_others():
 
     plt.barh(y_pos, vals, align='center', alpha=0.4)
     plt.yticks(y_pos, langs)
-    #plt.xlabel('Performance')
     plt.title('mentioned by others relative to tiobe value')
     plt.savefig('img/mentions_relative_to_tiobe.png', bbox_inches='tight')
 
@@ -755,12 +745,11 @@ def draw_graphs():
         True,
         'hardware')
 
-
     draw_who_by_others()
 
-    #todo: mentioned div tiobe: http://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
 
 def main():
+    # uncomment function calls to enable earlier steps
     #get_comments()
     #get_submission_ids()
     #pickle_comments()

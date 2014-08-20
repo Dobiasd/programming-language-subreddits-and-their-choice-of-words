@@ -1,6 +1,6 @@
 # Programming language subreddits and their choice of words
 
-While reading about various programming languages, I developed a hunch about how often different languages are mentioned by other communities and about average the  conversational tones used by the people there.
+While reading about various programming languages, I developed a hunch about how often different languages are mentioned by other communities and about average the conversational tones used by the people there.
 
 To examine if it was just selective perception on my site, [an unconscious confirmation of stereotypes](http://en.wikipedia.org/wiki/Confirmation_bias), or a valid observation I collected and analysed some data, i.e. all comments (about 300k) written to submissions (about 40k) in respective programming language subreddits from 2013-08 to 2014-07 using [PRAW](https://praw.readthedocs.org) and [SQLite](https://docs.python.org/2/library/sqlite3.html).
 
@@ -59,6 +59,6 @@ But what is up with the Visual Basic community? They are neither angry nor happy
 
 ## Disclaimer
 
-As you probably already noticed, this is not hard [science](http://www.reddit.com/r/programming/comments/2e2csa/programming_language_subreddits_and_their_choice/cjvk9uc). It was just a small fun project and contains several possiblities for errors. I tried to only choose big communities and frequent words so that there is at least a bit of statistical significance, but potential errors in my parser and interpretation (e.g. no taking negations into account etc.) are also not to exclude. ;)
+As you probably already noticed, this is not hard [science](http://www.reddit.com/r/programming/comments/2e2csa/programming_language_subreddits_and_their_choice/cjvk9uc). It was just a small fun project and contains several possibilities for errors. I tried to only choose big communities and frequent words so that there is at least a bit of statistical significance, but potential errors in my parser and interpretation (e.g. no taking negations into account etc.) are also not to exclude. ;)
 
-If somebody wants to repeat this exepriment to confirm/refute the results with more fancy tools like [nltk](http://www.nltk.org/) or something, I would be happy if you could [drop me an email](mailto:harry@daiw.de).
+If somebody wants to repeat this experiment to confirm/refute the results with more fancy tools like [nltk](http://www.nltk.org/) or something, I would be happy if you could [drop me an email](mailto:harry@daiw.de).

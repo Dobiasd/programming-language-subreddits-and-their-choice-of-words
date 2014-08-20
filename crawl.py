@@ -743,6 +743,7 @@ def draw_who_by_others():
     plt.yticks(y_pos, langs)
     plt.title('mentioned by others relative to tiobe value')
     plt.savefig('img/mentions_relative_to_tiobe.png', bbox_inches='tight')
+    plt.close()
 
 def draw_graphs():
     # colors from http://colorschemedesigner.com/csd-3.5/
@@ -794,8 +795,8 @@ def draw_irc():
         'sum')
 
 def main():
-    get_submission_ids()
-    get_comments()
+    #get_submission_ids()
+    #get_comments()
     pickle_comments()
     comments_to_db()
     cache_db_results()

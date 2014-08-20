@@ -26,7 +26,7 @@ languages = [
     ('ada', ['ada']),
     ('asm', ['assembler', 'asm']),
     ('brainfuck', ['brainfuck']),
-    ('c_programming', ['c_programming']), # 'c'
+    ('c_programming', []), # 'c'
     ('clojure', ['clojure']),
     ('cobol', ['cobol']),
     ('cpp', ['c++', 'cpp']),
@@ -69,6 +69,33 @@ languages = [
     ('tcl', ['tcl']),
     ('visualbasic', ['visual basic', 'visualbasic', 'vb'])
     ]
+
+subreddit_has_alias = dict(map(lambda x: (x[0], True if x[1] else False), languages))
+
+tiobe_values = {
+    'c_programming': 16.401,
+    'clojure': None,
+    'cpp': 4.695,
+    'csharp': 3.409,
+    'golang': 0.367,
+    'haskell': 0.343,
+    'java': 14.984,
+    'javascript': 2.172,
+    'lisp': 0.828,
+    'lua': 0.409,
+    'mathematica': None,
+    'matlab': 0.733,
+    'objectivec': 9.552,
+    'php': 2.864,
+    'python': 3.121,
+    'ruby': 1.242,
+    'rust': None,
+    'scala': 0.363,
+    'sql': 1.043,
+    'visualbasic': 2.014
+    }
+
+
 
 subreddits = map(lambda x: x[0], languages)
 
@@ -487,7 +514,7 @@ def print_table(table):
     result = ""
     for row in table:
         for cell in row:
-            result += cell + ","
+            result += str(cell) + ","
         result = result[:-1]
         result += "\n"
     return result
@@ -528,15 +555,24 @@ def print_word_table(c, subreddits, words):
 def transpose_table(mat):
     return zip(*mat)
 
+
+
 def show_mutual_mentions(c):
     big_languages = filter(lambda (s, _): isSubredditBig(c, s), languages)
     print ' '.join(map(operator.itemgetter(0), [("subreddit", [])] + big_languages))
-    for mentionee, _ in big_languages:
+    for mentionee, mentinee_aliases in big_languages:
+        if not mentinee_aliases:
+            continue
         print mentionee,
-        for mentioner, _ in big_languages:
+        for mentioner, mentioner_aliases in big_languages:
+            if not mentioner_aliases:
+                continue
             command = "SELECT cnt from cached_mutual_mentions WHERE mentioner = ? and mentionee = ?"
             c.execute(command, (mentioner, mentionee))
-            print int(c.fetchone()[0]),
+            result = int(c.fetchone()[0])
+            if mentioner is mentionee:
+                result = 0
+            print result,
         print
     print
 
@@ -602,7 +638,7 @@ def analyse_comments():
     who_himself(c)
     who_by_others(c)
     show_mutual_mentions(c)
-    count_word_mentions(c)
+    #count_word_mentions(c)
 
     conn.close()
 
@@ -663,6 +699,36 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
     #plt.show()
     plt.close()
 
+def draw_who_by_others():
+    table = []
+    with open('analysis/who_by_others.csv', 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            if not row:
+                continue
+            lang = row[0]
+            mention_val = float(row[1])
+            if not lang in tiobe_values:
+                continue
+            tiobe_val = tiobe_values[lang]
+            if not tiobe_val:
+                continue
+            if not subreddit_has_alias[lang]:
+                continue
+            table.append((lang, mention_val / tiobe_val))
+    print table
+    table.sort(key=operator.itemgetter(0), reverse=True)
+    print table
+    langs, vals = zip(*table)
+
+    y_pos = np.arange(len(langs))
+
+    plt.barh(y_pos, vals, align='center', alpha=0.4)
+    plt.yticks(y_pos, langs)
+    #plt.xlabel('Performance')
+    plt.title('mentioned by others relative to tiobe value')
+    plt.savefig('img/mentions_relative_to_tiobe.png', bbox_inches='tight')
+
 def draw_graphs():
     # colors from http://colorschemedesigner.com/csd-3.5/
     draw_word_mentions('cursing',
@@ -689,11 +755,8 @@ def draw_graphs():
         True,
         'hardware')
 
-    draw_word_mentions('words',
-        ['nerd'],
-        ['#67E667'],
-        True,
-        'nerd')
+
+    draw_who_by_others()
 
     #todo: mentioned div tiobe: http://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
 

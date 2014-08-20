@@ -1,5 +1,4 @@
 name,color
-c_programming,#9ACD32
 clojure,#91DC47
 cpp,#F5DEB3
 csharp,#EE82EE
@@ -18,4 +17,5 @@ ruby,#D8351D
 rust,#2E8B5
 scala,#F4A460
 sql,#FA8072
+swift,#9ACD32
 visualbasic,#6A5ACD

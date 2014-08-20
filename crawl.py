@@ -740,9 +740,7 @@ def draw_who_by_others():
             if not subreddit_has_alias[lang]:
                 continue
             table.append((lang, mention_val / tiobe_val))
-    print table
     table.sort(key=operator.itemgetter(0), reverse=True)
-    print table
     langs, vals = zip(*table)
 
     y_pos = np.arange(len(langs))
@@ -803,8 +801,8 @@ def draw_irc():
         'sum')
 
 def main():
-    get_submission_ids()
-    get_comments()
+    #get_submission_ids()
+    #get_comments()
     pickle_comments()
     comments_to_db()
     cache_db_results()

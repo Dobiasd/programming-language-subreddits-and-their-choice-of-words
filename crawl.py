@@ -360,7 +360,6 @@ def get_comments():
                     (submission_id, j + 1, len(ids), len(flat_comments), i + 1,
                      len(subreddits), subreddit)
                 for comment in flat_comments:
-                    print vars(comment)
                     #http://www.reddit.com/r/redditdev/comments/2e2q2l/praw_downvote_count_always_zero/cjvvq9o
                     #(comment.ups, comment.downs) = get_ups_and_downs(comment.upvote_ratio, comment)
                     if not hasattr(comment, 'id') or not hasattr(comment, 'body'):

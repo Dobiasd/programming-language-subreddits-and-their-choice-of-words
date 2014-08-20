@@ -1,5 +1,5 @@
-./analysis/all_comments_dict.pickle
-./analysis/comments.db
-./comments/*
-./days/*
-./submissions/*
+/analysis/all_comments_dict.pickle
+/analysis/comments.db
+/comments/*
+/days/*
+/submissions/*

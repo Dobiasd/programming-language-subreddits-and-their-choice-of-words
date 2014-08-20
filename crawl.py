@@ -811,3 +811,4 @@ if __name__ == '__main__':
 #  caps lock usage
 #  distance between words (pyramid filter)
 #  word clouds
+#  include circle jerk factor, i.e. upvote/downvote-ratio

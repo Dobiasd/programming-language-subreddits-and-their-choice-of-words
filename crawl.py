@@ -22,9 +22,9 @@ import matplotlib.pyplot as plt
 
 #config:
 # But please don't put too much unnecessary load onto the reddit servers. ;)
-minSubredditCommentsToCountAsBig = 10 # todo 1000
-fixedStartDate = None # todo 1406764800
-days_to_go_back = 1 # todo 365
+minSubredditCommentsToCountAsBig = 1000
+fixedStartDate = 1406764800
+days_to_go_back = 365
 
 languages = [
     ('actionscript', ['actionscript']),
@@ -795,8 +795,8 @@ def draw_irc():
         'sum')
 
 def main():
-    #get_submission_ids()
-    #get_comments()
+    get_submission_ids()
+    get_comments()
     pickle_comments()
     comments_to_db()
     cache_db_results()

@@ -3,7 +3,6 @@
 
 """crawl subreddit comments
 """
-
 __author__ = 'Tobias Hermann'
 __version__ = '1.0.0'
 
@@ -20,6 +19,12 @@ import sqlite3
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
+
+#config:
+# But please don't put too much unnecessary load onto the reddit servers. ;)
+minSubredditCommentsToCountAsBig = 1000
+fixedStartDate = 1406764800 # None
+days_to_go_back = 365
 
 languages = [
     ('actionscript', ['actionscript']),
@@ -323,6 +328,13 @@ def write_str_to_file(path, str):
     with open(path, 'w') as text_file:
         text_file.write(utf_to_ascii(str))
 
+# http://www.reddit.com/r/redditdev/comments/2e2q2l/praw_downvote_count_always_zero/
+def get_submission_downs(r, submission):
+    ratio = r.get_submission(submission.permalink).upvote_ratio
+    ups = round((ratio*submission.score)/(2*ratio - 1))
+    downs = ups - submission.score
+    return downs
+
 def get_comments():
     import praw
     r = praw.Reddit('Comment Scraper 1.0 by u/Dobias see')
@@ -338,6 +350,7 @@ def get_comments():
         for j, submission_id in enumerate(ids):
             try:
                 submission = r.get_submission(submission_id=submission_id)
+                submission.downs = get_submission_downs(r, submission)
                 subm_dir_base = 'comments/' + subreddit
                 submission_dir = subm_dir_base + '/' + submission_id
                 make_dir(submission_dir)
@@ -364,9 +377,9 @@ def get_today_start_as_unix_timestamp():
     return int(sec_since_epoch)
 
 def get_submission_ids():
-    days_to_go_back = 365
     startT = get_today_start_as_unix_timestamp()
-    startT = 1406764800
+    if fixedStartDate:
+        startT = fixedStartDate
     bash_script_file_name = 'temp_parse_submission_ids.sh'
     with open(bash_script_file_name, 'w') as bash_script:
         bash_script.write('mkdir days\n')
@@ -389,8 +402,8 @@ def get_submission_ids():
                 t = newT
             bash_script.write("grep -r days/%s -e comments | perl -pe 's/%s\\/comments\\/([a-z0-9]{4,7})/\\nregex_marker_start\\1regex_marker_end\\n/gi' | grep regex_marker_start | perl -pe 's/regex_marker_start(.*)regex_marker_end/\\1/g' | sort | uniq > submissions/%s.txt\n" % (subreddit, subreddit, subreddit))
 
-    #subprocess.call(['bash', bash_script_file_name])
-    #os.remove(bash_script_file_name)
+    subprocess.call(['bash', bash_script_file_name])
+    os.remove(bash_script_file_name)
 
 def load_comment(path):
     lines = [line.strip() for line in open(path)]
@@ -400,6 +413,7 @@ def load_comment(path):
 def load_comments(subreddit):
     comments = {}
     mainDir = "comments/" + subreddit
+    make_dir(mainDir)
     for submission_id in os.listdir(mainDir):
         path = os.path.join(mainDir, submission_id)
         if os.path.isdir(path):
@@ -418,6 +432,7 @@ def pickle_comments():
     for subreddit, aliases in languages:
         print subreddit
         allComments[subreddit] = load_comments(subreddit)
+    make_dir('analysis')
     write_str_to_file("analysis/all_comments_dict.pickle",
         cPickle.dumps(allComments))
 
@@ -436,7 +451,6 @@ def comments_to_db():
         os.remove(dbPath)
     conn = sqlite3.connect(dbPath)
     c = conn.cursor()
-    # todo: submissions table erstellen und befuellen?
 
     c.execute('''CREATE TABLE subreddits (name text)''')
     c.execute('''CREATE TABLE aliases(alias text, subreddit text)''')
@@ -534,18 +548,19 @@ def get_subreddit_comment_count(c, subreddit):
     c.execute(command, (subreddit,))
     return int(c.fetchone()[0])
 
-def print_word_table(c, subreddits, words):
+def show_word_table(c, subreddits, words):
     sanitized_words = map(prepare_comment_body, words)
     sanitized_words = filter(lambda x: x, sanitized_words)
-    print ' '.join(["subreddit"] + sanitized_words + ["sum"])
+    result = ','.join(["subreddit"] + sanitized_words + ["sum"])
     for subreddit in subreddits:
         cnt_sum = 0
-        print subreddit,
+        result += subreddit + ","
         for word in sanitized_words:
             res = relative_word_count(c, subreddit, word)
             cnt_sum += res
-            print res,
-        print cnt_sum
+            result += str(res) + ","
+        result += str(cnt_sum) + "\n"
+    return result
 
 def transpose_table(mat):
     return zip(*mat)
@@ -612,13 +627,13 @@ def who_by_others(c):
 
 def count_word_mentions(c):
     big_subreddits = filter(functools.partial(isSubredditBig, c), subreddits)
-    print_word_table(c, big_subreddits, positive_emotions)
-    print_word_table(c, big_subreddits, negative_emotions)
-    print_word_table(c, big_subreddits, internet_slang_words)
-    print_word_table(c, big_subreddits, single_words + opposite_words)
+    write_str_to_file('analysis/happy.csv', show_word_table(c, big_subreddits, positive_emotions))
+    write_str_to_file('analysis/cursing.csv', show_word_table(c, big_subreddits, negative_emotions))
+    write_str_to_file('analysis/slang.csv', show_word_table(c, big_subreddits, internet_slang_words))
+    write_str_to_file('analysis/words.csv', show_word_table(c, big_subreddits, single_words + opposite_words))
 
 def isSubredditBig(c, subreddit):
-    return get_subreddit_comment_count(c, subreddit) >= 1000
+    return get_subreddit_comment_count(c, subreddit) >= minSubredditCommentsToCountAsBig
 
 def cache_db_results():
     cache_subreddit_comment_counts()
@@ -637,7 +652,7 @@ def analyse_comments():
 
     conn.close()
 
-def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
+def draw_word_mentions(name, columns, colors, sorted_by_sum, filename, div_col=None):
     reader = csv.DictReader(open('analysis/' + name + '.csv'))
 
     output = []
@@ -645,7 +660,18 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename):
         d = {}
         for col in columns + ['subreddit']:
             d[col] = row[col]
+        if div_col:
+            d[div_col] = row[div_col]
         output.append(d)
+
+    def div_row(row, divisor):
+        return {k: int(10000*float(x)/float(divisor)) if k != 'subreddit' else x for k, x in row.items()}
+
+    if div_col:
+        output = [div_row(row, row[div_col]) for row in output]
+        #output = [x.pop(div_col) for x in output]
+
+    print output
 
     def dict_sum(d):
         c = d.copy();
@@ -719,6 +745,8 @@ def draw_who_by_others():
 
 def draw_graphs():
     # colors from http://colorschemedesigner.com/csd-3.5/
+    make_dir('img')
+
     draw_word_mentions('cursing',
         ['crap', 'fuck', 'hate', 'shit'],
         ['#66A3D2', '#7373D9', '#61D7A4', '#FFC373'],
@@ -745,17 +773,35 @@ def draw_graphs():
 
     draw_who_by_others()
 
+def grep_irc():
+    subprocess.call(['bash', 'grep_irc.sh'])
+
+def draw_irc():
+    make_dir('img')
+    draw_word_mentions('irc_words',
+        ['awesome', 'cool', 'fun', 'happy', 'helpful', 'interesting'],
+        ['#FF9640', '#FFBF40', '#FF4040', '#33CCCC', '#FFB273', '#FF7373'],
+        True,
+        'irc_happy',
+        'sum')
+
+    draw_word_mentions('irc_words',
+        ['abstract', 'category', 'pure', 'theory'],
+        ['#FF7373', '#FFB273', '#5CCCCC', '#67E667'],
+        True,
+        'irc_abstract_concepts',
+        'sum')
 
 def main():
-    # uncomment function calls to enable earlier steps
-    # But please don't put too much unnecessary load onto the reddit servers. ;)
-    #get_submission_ids()
-    #get_comments()
-    #pickle_comments()
-    #comments_to_db()
-    #cache_db_results()
-    #analyse_comments()
+    get_submission_ids()
+    get_comments()
+    pickle_comments()
+    comments_to_db()
+    cache_db_results()
+    analyse_comments()
     draw_graphs()
+    grep__irc()
+    draw_irc()
 
 if __name__ == '__main__':
     main()

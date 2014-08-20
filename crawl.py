@@ -335,7 +335,7 @@ def get_submission_downs(r, submission):
     downs = ups - submission.score
     return downs
 
-def get_comments():
+def get_comments(submissions_only=False):
     import praw
     r = praw.Reddit('Comment Scraper 1.0 by u/Dobias see')
 
@@ -360,6 +360,8 @@ def get_comments():
                 print 'submission %s (%d/%d, %d comments, subreddit %d/%d - %s)' %\
                     (submission_id, j + 1, len(ids), len(flat_comments), i + 1,
                      len(subreddits), subreddit)
+                if submissions_only:
+                    continue
                 for comment in flat_comments:
                     if not hasattr(comment, 'id') or not hasattr(comment, 'body'):
                         continue
@@ -670,9 +672,6 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename, div_col=N
 
     if div_col:
         output = [div_row(row, row[div_col]) for row in output]
-        #output = [x.pop(div_col) for x in output]
-
-    print output
 
     def dict_sum(d):
         c = d.copy();
@@ -711,7 +710,7 @@ def draw_word_mentions(name, columns, colors, sorted_by_sum, filename, div_col=N
         plt.bar(left=left, height=0.8, width=value, bottom=bottoms,
                 color=color, orientation="horizontal", label=name)
     plt.yticks(bottoms+0.4, subreddits)
-    plt.xlabel('contains word / comments')
+    plt.xlabel('contains word / 10000 comments')
     plt.legend(loc="best", bbox_to_anchor=(1.0, 1.00))
     plt.savefig('img/' + filename + '.png', bbox_inches='tight')
     plt.close()
@@ -796,7 +795,7 @@ def draw_irc():
 
 def main():
     #get_submission_ids()
-    #get_comments()
+    #get_comments(True)
     #pickle_comments()
     #comments_to_db()
     #cache_db_results()

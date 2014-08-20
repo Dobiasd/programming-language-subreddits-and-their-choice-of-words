@@ -748,6 +748,7 @@ def draw_graphs():
 
 def main():
     # uncomment function calls to enable earlier steps
+    # But please don't put too much unnecessary load onto the reddit servers. ;)
     #get_submission_ids()
     #get_comments()
     #pickle_comments()

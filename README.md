@@ -47,7 +47,7 @@ This part here is quite comforting, because a [conjecture many of us probably ha
 ![cursing](img/cursing.png "cursing")
 
 
-## Happyness
+## Happiness
 
 To finish with something positive: The lispy guys seem to be the most cheerful people.
 

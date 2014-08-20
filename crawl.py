@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 # But please don't put too much unnecessary load onto the reddit servers. ;)
 minSubredditCommentsToCountAsBig = 1000
 fixedStartDate = 1406764800 # None
-days_to_go_back = 365
+days_to_go_back = 1
 
 languages = [
     ('actionscript', ['actionscript']),
@@ -383,6 +383,7 @@ def get_submission_ids():
     bash_script_file_name = 'temp_parse_submission_ids.sh'
     with open(bash_script_file_name, 'w') as bash_script:
         bash_script.write('mkdir days\n')
+        bash_script.write('mkdir comments\n')
         bash_script.write('mkdir submissions\n')
         for subreddit in subreddits:
             bash_script.write('mkdir days/%s\n' % subreddit)

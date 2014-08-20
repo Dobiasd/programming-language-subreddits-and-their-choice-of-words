@@ -26,8 +26,7 @@ Sure, [measuring programming language popularity](http://en.wikipedia.org/wiki/M
 Here was the first time I said ["Ha! I knew it!"](http://en.wikipedia.org/wiki/Hindsight_bias).
 
 ![haskell tweet](img/haskell_tweet.png "haskell tweet")
-
-
+(No Haskell bash intended. I love it and its little web cousin [Elm](http://elm-lang.org) and use them for [projects](https://github.com/Dobiasd/RedditTimeMachine) and also write [articles](https://github.com/Dobiasd/articles) about it.)
 
 
 ## Word usage

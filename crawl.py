@@ -22,9 +22,9 @@ import matplotlib.pyplot as plt
 
 #config:
 # But please don't put too much unnecessary load onto the reddit servers. ;)
-minSubredditCommentsToCountAsBig = 1000
-fixedStartDate = 1406764800 # None
-days_to_go_back = 1
+minSubredditCommentsToCountAsBig = 10 # todo 1000
+fixedStartDate = None # todo 1406764800
+days_to_go_back = 1 # todo 365
 
 languages = [
     ('actionscript', ['actionscript']),
@@ -57,7 +57,7 @@ languages = [
     ('objectivec', ['objective-c', 'objective c', 'objectivec']),
     ('ocaml', ['ocaml']),
     ('pascal', ['pascal']),
-    ('perl', []), # 'perl'
+    ('perl', ['perl']),
     ('php', ['php']),
     ('prolog', ['prolog']),
     ('python', ['python']),
@@ -329,13 +329,12 @@ def write_str_to_file(path, str):
         text_file.write(utf_to_ascii(str))
 
 # http://www.reddit.com/r/redditdev/comments/2e2q2l/praw_downvote_count_always_zero/
-def get_submission_ups_and_downs(r, submission):
-    ratio = r.get_submission(submission.permalink).upvote_ratio
-    ups = int(round((ratio*submission.score)/(2*ratio - 1)) if ratio != 0.5 else round(submission.score/2))
-    downs = ups - submission.score
+def get_ups_and_downs(ratio, post):
+    ups = int(round((ratio*post.score)/(2*ratio - 1)) if ratio != 0.5 else round(submission.score/2))
+    downs = ups - post.score
     return (ups, downs)
 
-def get_comments(submissions_only=False):
+def get_comments():
     import praw
     r = praw.Reddit('Comment Scraper 1.0 by u/Dobias see')
 
@@ -350,7 +349,7 @@ def get_comments(submissions_only=False):
         for j, submission_id in enumerate(ids):
             try:
                 submission = r.get_submission(submission_id=submission_id)
-                (submission.ups, submission.downs) = get_submission_ups_and_downs(r, submission)
+                (submission.ups, submission.downs) = get_ups_and_downs(submission.upvote_ratio, submission)
                 subm_dir_base = 'comments/' + subreddit
                 submission_dir = subm_dir_base + '/' + submission_id
                 make_dir(submission_dir)
@@ -360,9 +359,10 @@ def get_comments(submissions_only=False):
                 print 'submission %s (%d/%d, %d comments, subreddit %d/%d - %s)' %\
                     (submission_id, j + 1, len(ids), len(flat_comments), i + 1,
                      len(subreddits), subreddit)
-                if submissions_only:
-                    continue
                 for comment in flat_comments:
+                    print vars(comment)
+                    #http://www.reddit.com/r/redditdev/comments/2e2q2l/praw_downvote_count_always_zero/cjvvq9o
+                    #(comment.ups, comment.downs) = get_ups_and_downs(comment.upvote_ratio, comment)
                     if not hasattr(comment, 'id') or not hasattr(comment, 'body'):
                         continue
                     comment_path = submission_dir + '/' + comment.id + ".txt"
@@ -630,6 +630,7 @@ def who_by_others(c):
 
 def count_word_mentions(c):
     big_subreddits = filter(functools.partial(isSubredditBig, c), subreddits)
+    print big_subreddits
     write_str_to_file('analysis/happy.csv', show_word_table(c, big_subreddits, positive_emotions))
     write_str_to_file('analysis/cursing.csv', show_word_table(c, big_subreddits, negative_emotions))
     write_str_to_file('analysis/slang.csv', show_word_table(c, big_subreddits, internet_slang_words))
@@ -795,13 +796,13 @@ def draw_irc():
 
 def main():
     get_submission_ids()
-    get_comments(True)
+    get_comments()
     pickle_comments()
     comments_to_db()
     cache_db_results()
     analyse_comments()
     draw_graphs()
-    grep__irc()
+    grep_irc()
     draw_irc()
 
 if __name__ == '__main__':

@@ -325,9 +325,7 @@ def write_str_to_file(path, str):
 
 def get_comments():
     import praw
-    r = praw.Reddit('Comment Scraper 1.0 by u/_Daimon_ see '
-                    'https://praw.readthedocs.org/en/latest/'
-                    'pages/comment_parsing.html')
+    r = praw.Reddit('Comment Scraper 1.0 by u/Dobias see')
 
     make_dir('comments')
 
@@ -750,8 +748,8 @@ def draw_graphs():
 
 def main():
     # uncomment function calls to enable earlier steps
-    #get_comments()
     #get_submission_ids()
+    #get_comments()
     #pickle_comments()
     #comments_to_db()
     #cache_db_results()

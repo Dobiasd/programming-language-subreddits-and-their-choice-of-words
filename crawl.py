@@ -329,11 +329,11 @@ def write_str_to_file(path, str):
         text_file.write(utf_to_ascii(str))
 
 # http://www.reddit.com/r/redditdev/comments/2e2q2l/praw_downvote_count_always_zero/
-def get_submission_downs(r, submission):
+def get_submission_ups_and_downs(r, submission):
     ratio = r.get_submission(submission.permalink).upvote_ratio
-    ups = round((ratio*submission.score)/(2*ratio - 1))
+    ups = int(round((ratio*submission.score)/(2*ratio - 1)) if ratio != 0.5 else round(submission.score/2))
     downs = ups - submission.score
-    return downs
+    return (ups, downs)
 
 def get_comments(submissions_only=False):
     import praw
@@ -350,7 +350,7 @@ def get_comments(submissions_only=False):
         for j, submission_id in enumerate(ids):
             try:
                 submission = r.get_submission(submission_id=submission_id)
-                submission.downs = get_submission_downs(r, submission)
+                (submission.ups, submission.downs) = get_submission_ups_and_downs(r, submission)
                 subm_dir_base = 'comments/' + subreddit
                 submission_dir = subm_dir_base + '/' + submission_id
                 make_dir(submission_dir)
@@ -794,14 +794,14 @@ def draw_irc():
         'sum')
 
 def main():
-    #get_submission_ids()
-    #get_comments(True)
-    #pickle_comments()
-    #comments_to_db()
-    #cache_db_results()
-    #analyse_comments()
+    get_submission_ids()
+    get_comments(True)
+    pickle_comments()
+    comments_to_db()
+    cache_db_results()
+    analyse_comments()
     draw_graphs()
-    #grep__irc()
+    grep__irc()
     draw_irc()
 
 if __name__ == '__main__':

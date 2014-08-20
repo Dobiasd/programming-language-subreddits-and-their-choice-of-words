@@ -59,6 +59,6 @@ But what is up with the Visual Basic community? They are neither angry nor happy
 
 ## Disclaimer
 
-As you probably already noticed, this is not hard [science](http://www.reddit.com/r/programming/comments/2e2csa/programming_language_subreddits_and_their_choice/cjvfskt). It was just a small fun project and contains several possiblities for errors. I tried to only choose big communities and frequent words so that there is at least a bit of statistical significance, but potential errors in my parser and interpretation (e.g. no taking negations into account etc.) are also not to exclude. ;)
+As you probably already noticed, this is not hard [science](http://www.reddit.com/r/programming/comments/2e2csa/programming_language_subreddits_and_their_choice/cjvk9uc). It was just a small fun project and contains several possiblities for errors. I tried to only choose big communities and frequent words so that there is at least a bit of statistical significance, but potential errors in my parser and interpretation (e.g. no taking negations into account etc.) are also not to exclude. ;)
 
 If somebody wants to repeat this exepriment to confirm/refute the results with more fancy tools like [nltk](http://www.nltk.org/) or something, I would be happy if you could [drop me an email](mailto:harry@daiw.de).

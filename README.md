@@ -49,7 +49,7 @@ This part here is quite comforting, because a [conjecture many of us probably ha
 
 ## Happiness
 
-To finish with something positive: The lispy guys seem to be the most cheerful people.
+To finish with something positive: The lispy guys seem to be the most cheerful people[.](img/i_should_learn_clojure.png)
 
 ![happy](img/happy.png "happy")
 

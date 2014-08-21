@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 #config:
 # But please don't put too much unnecessary load onto the reddit servers. ;)
 minSubredditCommentsToCountAsBig = 1000
-fixedStartDate = 1406764800
+fixedStartDate = 1406764800 # None for today
 days_to_go_back = 365
 
 languages = [
@@ -558,6 +558,7 @@ def show_word_table(c, subreddits, words):
     sanitized_words = map(prepare_comment_body, words)
     sanitized_words = filter(lambda x: x, sanitized_words)
     result = ','.join(["subreddit"] + sanitized_words + ["sum"])
+    result += "\n"
     for subreddit in subreddits:
         print subreddit,
         cnt_sum = 0
@@ -578,7 +579,7 @@ def save_mutual_mentions(c):
     big_languages = filter(lambda (_, a): a, big_languages)
     namecolorlist = "name,color\n"
     matrix = '['
-    result = ' '.join(map(operator.itemgetter(0), [("subreddit", [])] + big_languages))
+    result = ','.join(map(operator.itemgetter(0), [("subreddit", [])] + big_languages))
     colorCnt = 0
     for mentionee, mentinee_aliases in big_languages:
         if not mentinee_aliases:
@@ -850,15 +851,15 @@ def draw_irc():
 
 def main():
     #todo: uncomment to do these steps too
-    get_submission_ids()
-    get_comments()
-    pickle_comments()
-    comments_to_db()
-    cache_db_results()
-    analyse_comments()
+    #get_submission_ids()
+    #get_comments()
+    #pickle_comments()
+    #comments_to_db()
+    #cache_db_results()
+    #analyse_comments()
+    #grep_irc()
+    #draw_irc()
     draw_graphs()
-    grep_irc()
-    draw_irc()
 
 if __name__ == '__main__':
     main()

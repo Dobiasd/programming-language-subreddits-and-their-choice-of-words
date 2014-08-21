@@ -802,6 +802,30 @@ def draw_graphs():
         True,
         'hardware')
 
+    draw_word_mentions('cursing_all',
+        ['crap', 'fuck', 'hate', 'shit'],
+        ['#66A3D2', '#7373D9', '#61D7A4', '#FFC373'],
+        True,
+        'cursing_all')
+
+    draw_word_mentions('happy_all',
+        ['awesome', 'cool', 'fun', 'happy', 'helpful', 'interesting'],
+        ['#FF9640', '#FFBF40', '#FF4040', '#33CCCC', '#FFB273', '#FF7373'],
+        True,
+        'happy_all')
+
+    draw_word_mentions('words_all',
+        ['abstract', 'category', 'pure', 'theory'],
+        ['#FF7373', '#FFB273', '#5CCCCC', '#67E667'],
+        True,
+        'abstract_concepts_all')
+
+    draw_word_mentions('words_all',
+        ['hardware'],
+        ['#5577CC'],
+        True,
+        'hardware_all')
+
     draw_who_by_others()
 
 def grep_irc():

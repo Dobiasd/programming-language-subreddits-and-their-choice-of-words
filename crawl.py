@@ -36,7 +36,7 @@ languages = [
     ('cobol', ['cobol']),
     ('cpp', ['c++', 'cpp']),
     ('csharp', ['c#', 'c sharp', 'c-sharp', 'csharp']),
-    ('d_language', ['dlang', 'd_language']), # 'd'
+    ('d_language', ['dlang', 'd-lang', 'd_language']), # 'd'
     ('dartlang', ['dart', 'dartlang']),
     ('delphi', ['delphi']),
     ('elm', ['elm', 'elm-lang']),
@@ -454,7 +454,10 @@ def comments_to_db():
     conn = sqlite3.connect(dbPath)
     c = conn.cursor()
 
+    c.execute('''DROP TABLE IF EXISTS subreddits''')
     c.execute('''CREATE TABLE subreddits (name text)''')
+
+    c.execute('''DROP TABLE IF EXISTS aliases''')
     c.execute('''CREATE TABLE aliases(alias text, subreddit text)''')
 
     for subreddit, aliases in languages:
@@ -462,7 +465,7 @@ def comments_to_db():
         for alias in aliases:
             c.execute('INSERT INTO aliases VALUES (?, ?)', (alias, subreddit))
 
-
+    c.execute('''DROP TABLE IF EXISTS comments''')
     c.execute('''CREATE TABLE comments
              (id text, subreddit text, submission_id text, created_utc integer, ups integer, downs integer, author text, body text)''')
     for subreddit, comments in all_comments.iteritems():
@@ -521,8 +524,8 @@ def cache_subreddit_comment_counts():
     conn.commit()
     conn.close()
 
-def print_table(table):
-    result = ""
+def print_table(header, table):
+    result = ','.join(header) + "\n"
     for row in table:
         for cell in row:
             result += str(cell) + ","
@@ -551,10 +554,12 @@ def get_subreddit_comment_count(c, subreddit):
     return int(c.fetchone()[0])
 
 def show_word_table(c, subreddits, words):
+    print words
     sanitized_words = map(prepare_comment_body, words)
     sanitized_words = filter(lambda x: x, sanitized_words)
     result = ','.join(["subreddit"] + sanitized_words + ["sum"])
     for subreddit in subreddits:
+        print subreddit,
         cnt_sum = 0
         result += subreddit + ","
         for word in sanitized_words:
@@ -567,26 +572,43 @@ def show_word_table(c, subreddits, words):
 def transpose_table(mat):
     return zip(*mat)
 
-
-
-def show_mutual_mentions(c):
+def save_mutual_mentions(c):
+    colors = ['#91DC47','#F5DEB3','#EE82EE','#40E0D0','#FF6347','#D8BFD8','#D2B48C','#4682B4','#00FF7F','#FFFAFA','#708090','#708090','#87CEEB','#A0522D','#D8351D','#2E8B50','#F4A460','#FA8072','#9ACD32','#6A5ACD']
     big_languages = filter(lambda (s, _): isSubredditBig(c, s), languages)
-    print ' '.join(map(operator.itemgetter(0), [("subreddit", [])] + big_languages))
+    big_languages = filter(lambda (_, a): a, big_languages)
+    namecolorlist = "name,color\n"
+    matrix = '['
+    result = ' '.join(map(operator.itemgetter(0), [("subreddit", [])] + big_languages))
+    colorCnt = 0
     for mentionee, mentinee_aliases in big_languages:
         if not mentinee_aliases:
             continue
-        print mentionee,
+        namecolorlist += mentionee + "," + colors[colorCnt] + "\n"
+        colorCnt += 1
+        colorCnt = colorCnt % len(colors)
+        matrix += '\n['
+        result += mentionee + ","
         for mentioner, mentioner_aliases in big_languages:
             if not mentioner_aliases:
                 continue
             command = "SELECT cnt from cached_mutual_mentions WHERE mentioner = ? and mentionee = ?"
             c.execute(command, (mentioner, mentionee))
-            result = int(c.fetchone()[0])
+            intres = int(c.fetchone()[0])
             if mentioner is mentionee:
-                result = 0
-            print result,
-        print
-    print
+                intres = 0
+            result += str(intres) + ","
+            matrix += str(intres) + ","
+        result += "\n"
+        matrix = matrix[:-1]
+        matrix += '],'
+    matrix = matrix[:-1]
+    matrix += "\n]"
+    write_str_to_file("analysis/mutual_mentions.csv", result);
+    write_str_to_file("mentions_chord_graph/matrix.json", matrix);
+    write_str_to_file("mentions_chord_graph/subreddits.csv", namecolorlist);
+
+
+
 
 def who_by_whom(c):
     print 'who is mentioned by whom how often by others relative to respective others comment count'
@@ -600,7 +622,7 @@ def who_by_whom(c):
             AND cached_subreddit_comment_counts.cnt > 100\
         ORDER BY result DESC'
     c.execute(command)
-    write_str_to_file("analysis/who_by_whom.csv", print_table(c.fetchall()))
+    write_str_to_file("analysis/who_by_whom.csv", print_table(['mentioner', 'mentionee', 'relCnt'], c.fetchall()))
 
 def who_himself(c):
     print 'who mentions himself the most often relative to own comment count'
@@ -612,7 +634,7 @@ def who_himself(c):
             AND cached_mutual_mentions.mentioner == cached_mutual_mentions.mentionee\
         ORDER BY result DESC, mentionee'
     c.execute(command)
-    write_str_to_file("analysis/who_himself.csv", print_table(c.fetchall()))
+    write_str_to_file("analysis/who_himself.csv", print_table(['mentioner and mentionee', 'relCnt'], c.fetchall()))
 
 def who_by_others(c):
     print 'who is mentioned how often by others relative to all others comment count'
@@ -625,11 +647,12 @@ def who_by_others(c):
         GROUP BY mentionee\
         ORDER BY result DESC'
     c.execute(command)
-    write_str_to_file("analysis/who_by_others.csv", print_table(c.fetchall()))
+    write_str_to_file("analysis/who_by_others.csv", print_table(['mentionee', 'relCnt'], c.fetchall()))
 
 def count_word_mentions(c):
     big_subreddits = filter(functools.partial(isSubredditBig, c), subreddits)
     print big_subreddits
+
     write_str_to_file('analysis/happy.csv', show_word_table(c, big_subreddits, positive_emotions))
     write_str_to_file('analysis/cursing.csv', show_word_table(c, big_subreddits, negative_emotions))
     write_str_to_file('analysis/slang.csv', show_word_table(c, big_subreddits, internet_slang_words))
@@ -655,14 +678,13 @@ def analyse_comments():
     who_by_whom(c)
     who_himself(c)
     who_by_others(c)
-    show_mutual_mentions(c)
     count_word_mentions(c)
+    save_mutual_mentions(c)
 
     conn.close()
 
 def draw_word_mentions(name, columns, colors, sorted_by_sum, filename, div_col=None):
     reader = csv.DictReader(open('analysis/' + name + '.csv'))
-
     output = []
     for row in reader:
         d = {}
@@ -727,6 +749,7 @@ def draw_who_by_others():
     table = []
     with open('analysis/who_by_others.csv', 'rb') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
+        next(reader, None)  # skip the headers
         for row in reader:
             if not row:
                 continue
@@ -801,12 +824,13 @@ def draw_irc():
         'sum')
 
 def main():
+    #todo: uncomment to do these steps too
     #get_submission_ids()
     #get_comments()
-    pickle_comments()
-    comments_to_db()
-    cache_db_results()
-    analyse_comments()
+    #pickle_comments()
+    #comments_to_db()
+    #cache_db_results()
+    #analyse_comments()
     draw_graphs()
     grep_irc()
     draw_irc()

@@ -1,3 +1,4 @@
+mentioner and mentionee,relCnt
 elm,6259.54198473
 cobol,6000.0
 dartlang,5961.12311015
@@ -11,6 +12,7 @@ prolog,3853.50318471
 fortran,3853.21100917
 sml,3750.0
 erlang,3654.97076023
+perl,3583.91608392
 haxe,3579.54545455
 lua,3570.82273113
 scala,3505.50381033
@@ -40,7 +42,6 @@ javascript,1253.6619616
 csharp,1207.14543486
 actionscript,869.565217391
 golang,785.246342996
-c_programming,179.735682819
-perl,0.0
+c_programming,0.0
 shell,0.0
 smalltalk,0.0

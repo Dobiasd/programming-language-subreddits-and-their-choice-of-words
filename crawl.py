@@ -330,7 +330,7 @@ def write_str_to_file(path, str):
 
 # http://www.reddit.com/r/redditdev/comments/2e2q2l/praw_downvote_count_always_zero/
 def get_ups_and_downs(ratio, post):
-    ups = int(round((ratio*post.score)/(2*ratio - 1)) if ratio != 0.5 else round(submission.score/2))
+    ups = int(round((ratio*post.score)/(2*ratio - 1)) if ratio != 0.5 else round(post.score/2))
     downs = ups - post.score
     return (ups, downs)
 
@@ -603,6 +603,7 @@ def save_mutual_mentions(c):
         matrix += '],'
     matrix = matrix[:-1]
     matrix += "\n]"
+    make_dir('mentions_chord_graph')
     write_str_to_file("analysis/mutual_mentions.csv", result);
     write_str_to_file("mentions_chord_graph/matrix.json", matrix);
     write_str_to_file("mentions_chord_graph/subreddits.csv", namecolorlist);
@@ -849,12 +850,12 @@ def draw_irc():
 
 def main():
     #todo: uncomment to do these steps too
-    #get_submission_ids()
-    #get_comments()
-    #pickle_comments()
-    #comments_to_db()
-    #cache_db_results()
-    #analyse_comments()
+    get_submission_ids()
+    get_comments()
+    pickle_comments()
+    comments_to_db()
+    cache_db_results()
+    analyse_comments()
     draw_graphs()
     grep_irc()
     draw_irc()

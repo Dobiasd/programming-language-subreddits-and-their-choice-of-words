@@ -61,6 +61,6 @@ But what is up with the Visual Basic community? They are neither angry nor happy
 
 As you probably already noticed, this is not hard [science](http://www.reddit.com/r/programming/comments/2e2csa/programming_language_subreddits_and_their_choice/cjvk9uc). It was just a small fun project and contains several possibilities for errors. I tried to only choose big communities and frequent words so that there is at least a bit of statistical significance.
 (btw If you remove this constraint [Elm](http://elm-lang.org/) is [the most happy and coolest language](https://raw.githubusercontent.com/Dobiasd/programming-language-subreddits-and-their-choice-of-words/master/img/happy_all.png). ^_-)
-But potential errors in my parser and interpretation (e.g. no taking negations into account etc.) also not to exclude fully as well. ;)
+But potential errors in my parser and interpretation (e.g. no taking negations into account etc.) are not to exclude fully as well. ;)
 
 Also, positive correlation (e.g cursing <-> PHP) [does not imply](http://en.wikipedia.org/wiki/Correlation_does_not_imply_causation) one causing the other. But if somebody wants to repeat this experiment to confirm/refute the results with more fancy tools like [nltk](http://www.nltk.org/) or something, I would be happy if you could [drop me an email](mailto:harry@daiw.de).

@@ -35,7 +35,7 @@ languages = [
     ('clojure', ['clojure']),
     ('cobol', ['cobol']),
     ('cpp', ['c++', 'cpp']),
-    ('csharp', ['c#', 'c sharp', 'c-sharp', 'csharp']),
+    ('csharp', ['c#', 'c-sharp', 'csharp']),
     ('d_language', ['dlang', 'd-lang', 'd_language']), # 'd'
     ('dartlang', ['dart', 'dartlang']),
     ('delphi', ['delphi']),
@@ -43,7 +43,7 @@ languages = [
     ('erlang', ['erlang']),
     ('forth', ['forth']),
     ('fortran', ['fortran']),
-    ('fsharp', ['f#', 'f sharp', 'f-sharp', 'fsharp']),
+    ('fsharp', ['f#', 'f-sharp', 'fsharp']),
     ('golang', ['golang']), # 'go'
     ('groovy', ['groovy']),
     ('haskell', ['haskell']),
@@ -54,7 +54,7 @@ languages = [
     ('lua', ['lua']),
     ('mathematica', ['mathematica']),
     ('matlab', ['matlab']),
-    ('objectivec', ['objective-c', 'objective c', 'objectivec']),
+    ('objectivec', ['objective-c', 'objectivec']),
     ('ocaml', ['ocaml']),
     ('pascal', ['pascal']),
     ('perl', ['perl']),

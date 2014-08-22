@@ -1,4 +1,5 @@
-subreddit,clojure,cpp,csharp,golang,haskell,java,javascript,lisp,lua,mathematica,matlab,objectivec,perl,php,python,ruby,rust,scala,sql,swift,visualbasicclojure,0,7,3,19,114,93,49,131,0,0,0,0,6,6,79,35,15,39,0,1,0,
+subreddit,clojure,cpp,csharp,golang,haskell,java,javascript,lisp,lua,mathematica,matlab,objectivec,perl,php,python,ruby,rust,scala,sql,swift,visualbasic
+clojure,0,7,3,19,114,93,49,131,0,0,0,0,6,6,79,35,15,39,0,1,0,
 cpp,31,0,214,238,508,325,218,51,30,4,48,20,68,210,747,105,1195,47,18,74,9,
 csharp,15,130,0,42,121,315,158,11,9,0,9,8,20,187,197,51,137,32,45,51,62,
 golang,0,7,3,0,14,7,6,0,0,0,0,0,0,18,40,2,27,1,0,2,0,

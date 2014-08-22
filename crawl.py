@@ -49,7 +49,7 @@ languages = [
     ('haskell', ['haskell']),
     ('haxe', ['haxe']),
     ('java', ['java']),
-    ('javascript', ['javascript']), # 'js'
+    ('javascript', ['javascript', 'nodejs']), # 'js'
     ('lisp', ['lisp']),
     ('lua', ['lua']),
     ('mathematica', ['mathematica']),

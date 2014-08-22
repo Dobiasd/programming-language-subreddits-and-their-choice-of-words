@@ -399,7 +399,7 @@ def get_submission_ids():
                 # Limit is set to 1000 posts,
                 # although reddit only shows 100 at a time.
                 # But usually this should be enough
-                # to get the most important posts per day.
+                # to get the all posts per day.
                 bash_script.write('wget -t 32 -T 16 "http://www.reddit.com/r/%s/search?q=timestamp:%d..%d&sort=top&restrict_sr=on&syntax=cloudsearch&limit=1000" -O days/%s/%d-%d\n' % (subreddit, newT, t, subreddit, newT, t))
                 t = newT
             bash_script.write("grep -r days/%s -e comments | perl -pe 's/%s\\/comments\\/([a-z0-9]{4,7})/\\nregex_marker_start\\1regex_marker_end\\n/gi' | grep regex_marker_start | perl -pe 's/regex_marker_start(.*)regex_marker_end/\\1/g' | sort | uniq > submissions/%s.txt\n" % (subreddit, subreddit, subreddit))
@@ -580,6 +580,7 @@ def save_mutual_mentions(c):
     namecolorlist = "name,color\n"
     matrix = '['
     result = ','.join(map(operator.itemgetter(0), [("subreddit", [])] + big_languages))
+    result += "\n"
     colorCnt = 0
     for mentionee, mentinee_aliases in big_languages:
         if not mentinee_aliases:
@@ -850,15 +851,14 @@ def draw_irc():
         'sum')
 
 def main():
-    #todo: uncomment to do these steps too
-    #get_submission_ids()
-    #get_comments()
-    #pickle_comments()
-    #comments_to_db()
-    #cache_db_results()
-    #analyse_comments()
-    #grep_irc()
-    #draw_irc()
+    get_submission_ids()
+    get_comments()
+    pickle_comments()
+    comments_to_db()
+    cache_db_results()
+    analyse_comments()
+    grep_irc()
+    draw_irc()
     draw_graphs()
 
 if __name__ == '__main__':

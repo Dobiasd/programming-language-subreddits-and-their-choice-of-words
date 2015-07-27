@@ -91,6 +91,7 @@ tiobe_values = {
     'mathematica': None,
     'matlab': 0.733,
     'objectivec': 9.552,
+    'perl': 1.607,
     'php': 2.864,
     'python': 3.121,
     'ruby': 1.242,

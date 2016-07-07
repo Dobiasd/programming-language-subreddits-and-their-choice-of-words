@@ -56,6 +56,10 @@ To finish with something positive: The lispy guys seem to be the most cheerful p
 But what is up with the Visual Basic community? They are neither angry nor happy. They just ... are? :)
 
 
+## Other subjects
+
+On [editgym.com/subreddits-and-their-choice-of-words](http://www.editgym.com/subreddits-and-their-choice-of-words/) you can find more analyses of this kind applied to different topics/subreddits like gaming, music, sports, operating systems, etc.
+
 
 ## Disclaimer
 
